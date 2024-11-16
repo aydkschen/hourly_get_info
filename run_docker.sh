@@ -22,6 +22,8 @@ echo "Stopping containers cf and xui..."
 sudo docker stop cf 
 sudo docker stop xui 
 echo "commit xui..."
+docker history xui
+
 docker commit xui xui:latest
 echo "save xui..."
 docker save -o xui.tar xui:latest
