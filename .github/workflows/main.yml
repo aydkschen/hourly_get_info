@@ -25,7 +25,7 @@ jobs:
         wget https://github.com/aydkschen/hourly_get_info/releases/download/latest/xui_img.tar.gz
         # tar -zxvf xui_img.tar.gz
         # docker load -i xui.tar
-        cat xui.tar.gz | docker import - xui:latest
+        cat xui_img.tar.gz | docker import - xui:latest
         
         cd $GITHUB_WORKSPACE
         docker network create --subnet=172.18.0.0/16 my_custom_network
