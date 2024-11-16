@@ -18,7 +18,6 @@ while [ $(date +%s) -lt $end_time ]; do
 done
 
 # 当时间超过 4 小时 55 分钟后，停止 Docker 容器
-# sudo docker stop chat
 sudo docker stop cf 
 sudo docker stop xui 
 docker commit xui xui:latest
