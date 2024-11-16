@@ -9,7 +9,7 @@ start_time=$(date +%s)
 
 # 计算 4 小时 55 分钟后的时间戳
 # end_time=$((start_time + 5*60*60 + 55*60))
-end_time=$((start_time + 5*60))
+end_time=$((start_time + 1*60))
 
 # 循环检查时间，直到当前时间超过结束时间
 while [ $(date +%s) -lt $end_time ]; do
@@ -18,10 +18,14 @@ while [ $(date +%s) -lt $end_time ]; do
 done
 
 # 当时间超过 4 小时 55 分钟后，停止 Docker 容器
+echo "Stopping containers cf and xui..."
 sudo docker stop cf 
 sudo docker stop xui 
+echo "commit xui..."
 docker commit xui xui:latest
+echo "save xui..."
 docker save -o xui.tar xui:latest
+echo "tar xui..."
 tar -zcvf xui_img.tar.gz xui.tar
 sudo docker rm cf xui
 
