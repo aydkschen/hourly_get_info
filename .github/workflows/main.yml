@@ -50,8 +50,8 @@ jobs:
     - name: Commit changes and publish release
       uses: EndBug/add-and-commit@v9
       with:
-        author_name: Your Name
-        author_email: mail@example.com
+        author_name: aydkschen
+        author_email: kschen202115@stu.ahmu.edu.cn
         message: 'update time'
         add: '*.now'
     - name: restart and upload
