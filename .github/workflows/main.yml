@@ -2,6 +2,7 @@ name: hourly_jobs
 
 on:
   workflow_dispatch:
+  push:
   # schedule:
   #   - cron: '0 */6 * * *'  
 
@@ -30,7 +31,6 @@ jobs:
         cd $GITHUB_WORKSPACE
         docker network create --subnet=172.18.0.0/16 my_custom_network
 
-        # 启动 Docker 容器
         sudo docker run -itd --name xui --net my_custom_network --ip 172.18.0.12 xui:latest /usr/local/x-ui/x-ui
         sudo docker run -itd --name cf --net my_custom_network --ip 172.18.0.10 cloudflare/cloudflared:latest tunnel --no-autoupdate run --token eyJhIjoiYWZjODQ0MzQ0YzNhZGE5ODM3MzgzYjFlNDQzYjg3YWEiLCJ0IjoiMTQyZDMzMWMtYWUzZC00ZGJkLThhYzktZDJlNzY2YTAxYmFiIiwicyI6Ill6YzRNRGhpWVRBdE0yRmpOQzAwWW1RNUxUbGhOVFF0WXpSbE16WmlOMlF5TXpOaiJ9
         ip add
@@ -46,18 +46,13 @@ jobs:
         cd $GITHUB_WORKSPACE
         start_time=$(date +%s)
         echo $start_time > time.now
-        
-        
-        
-        
-    - name: Commit changes
+    - name: Commit changes and publish release
       uses: EndBug/add-and-commit@v9
       with:
         author_name: Your Name
         author_email: mail@example.com
         message: 'update time'
         add: '*.now'
-        
     - name: restart and upload
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} > token.txt
@@ -65,3 +60,5 @@ jobs:
         rm token.txt
         gh release delete latest
         gh release create latest xui_img.tar.gz
+        
+
