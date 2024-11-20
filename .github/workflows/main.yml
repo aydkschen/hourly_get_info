@@ -75,6 +75,7 @@ jobs:
         start_time=$(date +%s)
         echo $start_time > time.now
     - name: Commit changes and publish release
+      if: env.should_commit == 'true'
       uses: EndBug/add-and-commit@v9
       with:
         author_name: aydkschen
