@@ -21,6 +21,7 @@ jobs:
     - name: Run Docker container
       run: |
         cd $GITHUB_WORKSPACE
+        sleep 10
         mkdir img
         cd img
         wget https://github.com/aydkschen/hourly_get_info/releases/download/latest/xui_img.tar.gz
