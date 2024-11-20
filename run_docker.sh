@@ -21,7 +21,7 @@ done
 echo "Stopping containers cf and xui..."
 sudo docker stop cf 
 sudo docker stop xui 
-docker export xui | gzip > xui.tar.gz
+docker export xui | gzip > xui_img.tar.gz
 
 sudo docker rm cf xui
 
