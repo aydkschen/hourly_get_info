@@ -8,7 +8,7 @@ random_duration=$((18000 + RANDOM % (21000 - 18000 + 1)))
 
 # 计算结束时间戳
 #end_time=$((start_time + random_duration))
-end_time=$((start_time + 1*60))
+end_time=$((start_time + 10*60))
 
 # 循环检查时间，直到当前时间超过结束时间
 while [ $(date +%s) -lt $end_time ]; do
