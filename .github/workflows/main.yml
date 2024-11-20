@@ -21,7 +21,6 @@ jobs:
     - name: Run Docker container
       run: |
         cd $GITHUB_WORKSPACE
-        sleep 10
         mkdir img
         cd img
         wget https://github.com/aydkschen/hourly_get_info/releases/download/latest/xui_img.tar.gz
@@ -44,6 +43,34 @@ jobs:
         sudo chmod +x run_docker.sh
         sudo bash run_docker.sh
         sudo docker ps -a
+    - name: Get current timestamp and compare with time.now
+      id: check_time
+      run: |
+        # 获取当前时间戳（秒）
+        current_time=$(date +%s)
+        echo "Current time: $current_time"
+
+        # 如果 time.now 文件存在，则读取时间戳
+        if [ -f time.now ]; then
+          last_commit_time=$(cat time.now)
+          echo "Last commit time: $last_commit_time"
+
+          # 计算时间差（秒）
+          time_diff=$((current_time - last_commit_time))
+
+          # 如果时间差大于一周（7天 * 24小时 * 60分钟 * 60秒）
+          if [ $time_diff -gt 604800 ]; then
+            echo "More than one week has passed, performing commit."
+            echo "should_commit=true" >> $GITHUB_ENV
+          else
+            echo "Less than a week has passed, skipping commit."
+            echo "should_commit=false" >> $GITHUB_ENV
+          fi
+        else
+          echo "time.now file does not exist. Proceeding with commit."
+          echo "should_commit=true" >> $GITHUB_ENV
+        fi
+        
         cd $GITHUB_WORKSPACE
         start_time=$(date +%s)
         echo $start_time > time.now
