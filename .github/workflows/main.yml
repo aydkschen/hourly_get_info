@@ -61,5 +61,6 @@ jobs:
         rm token.txt
         gh release delete latest
         gh release create latest xui_img.tar.gz
+        gh workflow run main.yml
         
 
