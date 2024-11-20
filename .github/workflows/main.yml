@@ -37,12 +37,26 @@ jobs:
         sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' cf
 
         sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' xui
-    - name: 保活
+    - name: keep alive
       run: |
         cd $GITHUB_WORKSPACE
         sudo chmod +x run_docker.sh
         sudo bash run_docker.sh
         sudo docker ps -a
+        cd $GITHUB_WORKSPACE
+        start_time=$(date +%s)
+        echo $start_time > time.now
+        
+        
+        
+        
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        author_name: Your Name
+        author_email: mail@example.com
+        message: 'update time'
+        add: '*.now'
         
     - name: restart and upload
       run: |
