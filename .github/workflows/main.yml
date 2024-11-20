@@ -2,7 +2,7 @@ name: hourly_jobs
 
 on:
   workflow_dispatch:
-  push:
+  # push:
   # schedule:
   #   - cron: '0 */6 * * *'  
 
